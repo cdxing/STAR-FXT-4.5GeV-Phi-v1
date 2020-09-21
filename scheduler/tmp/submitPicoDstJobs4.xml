@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Job parameters -->
+<job maxFilesPerProcess="1" filesPerHour="1" fileListSyntax="xrootd">
+
+  <!-- Task list -->
+  <command>
+    stardev
+    root -q -b -l RunAnalyzer.C
+    <!--root -q -b -l PhiFlowAnalyzer.C+\(\"$FILELIST\",\"$JOBID\"\)-->
+    root4star -q -b -l PicoDstAnalyzer4.C+\(\"$FILELIST\",\"$JOBID\",2\)
+
+    <!-- root -q -b -l EventPlaneBuilder.C+\(\"$FILELIST\",\"$JOBID\"\)-->
+  </command>
+
+  <!-- Necessary files -->
+  <SandBox installer="ZIP">
+    <Package>
+      <File>file:/star/data01/pwg/dchen/Ana/fxtPicoAna/playGround/StRoot</File>
+      <File>file:/star/data01/pwg/dchen/Ana/fxtPicoAna/RunAnalyzer.C</File>
+      <!-- <File>file:/star/data01/pwg/dchen/Ana/fxtPicoAna/PicoDstAnalyzer2.C</File>-->
+      <File>file:/star/data01/pwg/dchen/Ana/fxtPicoAna/PicoDstAnalyzer4.C</File>
+      <!--<File>file:/star/data01/pwg/dchen/Ana/fxtPicoAna/PhiFlowAnalyzer.C</File>-->
+
+    </Package>
+  </SandBox>
+
+  <!-- Get input files from get_file_lis.pl -->
+  <input URL="filelist:/star/data01/pwg/dchen/Ana/fxtPicoAna/test.lis" nFiles="all" />
+  <!--input URL="file:/star/data01/pwg/ywu27/PicoDst/*.root" nFiles="all" /-->
+  
+  <!-- Run log & error messages -->
+  <stdout URL="file:/star/data01/pwg/dchen/Ana/fxtPicoAna/scheduler/out/$JOBID.out" />
+  <stderr URL="file:/star/data01/pwg/dchen/Ana/fxtPicoAna/scheduler/out/$JOBID.err" />
+  <output fromScratch="*.root" toURL="file:/star/data01/pwg/dchen/Ana/fxtPicoAna/resultv2/"/>
+  
+</job>
